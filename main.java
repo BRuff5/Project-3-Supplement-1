@@ -1,4 +1,7 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 /**
  * Function to write content to a file specified by a file path.
@@ -36,6 +39,19 @@ public class main {
         return content.toString().trim(); 
     }
 
+    /**
+     * Counts the number of lines 
+     *
+     * @param filePath the path of the file to count lines in
+     * @return the number of lines in the file
+    
+     */
+    public static int countLinesInFile(String filePath) throws IOException {
+        try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
+            return (int) lines.count();
+        }
+    }
+
    
 // Example usage
 public static void main(String[] args) {
@@ -52,6 +68,11 @@ public static void main(String[] args) {
         String fileContent = readFromFile(filePath);
         System.out.println("Content read from the file:");
         System.out.println(fileContent);
+        
+
+        // Count lines in the file
+        int lineCount = countLinesInFile(filePath);
+        System.out.println("Number of lines in the file: " + lineCount);
 
     } catch (IOException e) {
         System.err.println("An error occurred: " + e.getMessage());
